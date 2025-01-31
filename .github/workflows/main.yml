@@ -8,7 +8,7 @@ on: #this defines the triger
 #define jobs next
 jobs:
   build:
-    runs-on: ubuntu-latest #build the js code on ubuntu OS
+    runs-on: ubuntu-latest #build the js code on ubuntu OS virtual environment. it does not create an instance
     steps: #provide steps
     - name: Checkout #what is it to check,? the commands in the code using the code 
       uses: actions/checkout@v1 #command to check code on repo
@@ -21,4 +21,4 @@ jobs:
         aws-region: us-east-1
 
     - name: Deploy static site from S3 bucket
-      run: aws s3 sync . s3://githubactionsngwa1 --delete #--delete means delete any file other than that in the bucket
+      run: aws s3 sync . s3://githubactionsngwa1 --delete #--delete means delete any file in the s3 if deleted in the yml as well.
