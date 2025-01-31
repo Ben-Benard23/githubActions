@@ -1,23 +1,24 @@
-name: Portfolio Deployment
+name: Static website Deployment
 
-on:
-  push:
-    branches:
+on: #this defines the triger
+  push: # when should it be triggered?when you push anything to the repo
+    branches: #push where ? on the branches
     - main
 
+#define jobs next
 jobs:
-  build-to-test:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v1
-
+  build:
+    runs-on: ubuntu-latest #build the js code on ubuntu OS
+    steps: #provide steps
+    - name: Checkout #what is it to check,? the commands in the code using the code 
+      uses: actions/checkout@v1 #command to check code on repo
+# after the code is check, we have to deploy it to aws account, by first configuring it
     - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: ap-south-1
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }} #pass credentials in the form of variables since repo is public
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }} # note that values are in github settings
+        aws-region: ue-east-1
 
-    - name: Deploy static site to S3 bucket
-      run: aws s3 sync . s3://github-action-bucket-01 --delete
+    - name: Deploy static site from S3 bucket
+      run: aws s3 sync . s3://githubactionsngwa1 --delete #--delete means delete any file other than that in the bucket
